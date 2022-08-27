@@ -1,7 +1,6 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -9,8 +8,37 @@
 export default {
   name: 'App',
   components: {
-    HelloWorld
+
+  }, data() {
+    return {
+      res: {}
+    }
+  },
+  mounted() {
+
+    this.getUser();
+    this.getCartCount();
+  },
+  methods: {
+    getUser() {
+      this.axios.get('/user').then((res) => {
+
+        this.$store.dispatch("saveUserName", res.username);
+
+      });
+
+    },
+    getCartCount() {
+      this.axios.get('/carts/products/sum').then((res) => { 
+         this.$store.dispatch("getCartCount", res);
+      });
+
+    }
   }
 }
 </script>
-<style></style>
+<style lang="scss">
+@import './assets/scss/reset.scss';
+@import './assets/scss/config.scss';
+@import './assets/scss/button.scss';
+</style>
