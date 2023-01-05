@@ -5,7 +5,11 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import vuelazyload from 'vue-lazyload'
 import VueCookie from 'vue-cookie'
-import store  from './store'
+import store from './store'
+import { Message } from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css';
+
+
 
 const mock = false;
 if (mock) {
@@ -28,15 +32,20 @@ axios.interceptors.response.use(function (response) {
   if (res.status == 0) {
     return res.data;
   } else if (res.status == 10) {
-    if ( path != '/index' && path !='/login') {
+    if (path != '/index' && path != '/login') {
       window.location.href = '/login';
     }
   } else {
-    alert(res.msg);
+    Message.warning(res.msg);
+    return Promise.reject(res);
   }
+}, (error) => {
+  let res = error.response;
+  alert(res);
+  return Promise.reject(res);
+
 })
-
-
+Vue.prototype.$message = Message;
 Vue.use(VueAxios, axios)
 Vue.use(VueCookie);
 Vue.use(vuelazyload, {

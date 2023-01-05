@@ -1,20 +1,30 @@
 <template>
-    <div>
-        order
-        <OrderHeader></OrderHeader>
+    <div class="order">
         <router-view></router-view>
-        <NavFooter></NavFooter>
+        <service-bar></service-bar>
+        <nav-footer></nav-footer>
     </div>
 </template>
 <script>
-import NavFooter from './../components/NavFooter.vue'
-import OrderHeader from '../components/OrderHeader.vue'
-    export default{
-        name:'nav-home',
-        components:{
-    NavFooter,
-    OrderHeader
-}
+import ServiceBar from './../components/ServiceBar'
+import NavFooter from './../components/NavFooter'
+export default {
+    name: 'order',
+    data() {
+        return {
+            title: '',
+            tip: ''
+        }
+    },
+    mounted() {
+       
+
+    },
+    components: {
+        ServiceBar,
+        NavFooter,
         
+
     }
+}
 </script>

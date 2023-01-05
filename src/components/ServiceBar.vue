@@ -24,7 +24,7 @@
 </template>
 <script>
     export default{
-        name:'service-bar'
+        name:'serverBar'
     }
 </script>
 <style lang="scss">

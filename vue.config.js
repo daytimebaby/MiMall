@@ -12,5 +12,10 @@ module.exports ={
             }
         }
     },
+    // lintOnSave:false //是否开启代码校验
+    productionSourceMap:false,
+    chainWebpack:(config)=>{
+        config.plugins.delete('prefetch');
+    }
     
 }

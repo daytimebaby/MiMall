@@ -12,9 +12,12 @@
                 <div class="topbar-user">
                     <a href="javascript:;" v-if="username">{{ username }}</a>
                     <a href="javascript:;" v-if="!username" @click="login">登陆</a>
-                    <a href="javascript:;" v-if="username">我的订单</a>
+                    <a href="/order/list" v-if="username">我的订单</a>
                     <a href="javascript:;" v-if="!username">注册</a>
-                    <a href="javascript:;" class="my-cart" @click="goToCart"><span class="icon-cart"></span>购物车({{cartcount}})</a>
+                    <a href="javascript:;" v-if="username" @click="logout">退出</a>
+                    <a href="javascript:;" class="my-cart" @click="goToCart"><span class="icon-cart"></span>购物车({{
+                            cartcount
+                    }})</a>
                 </div>
             </div>
         </div>
@@ -177,24 +180,25 @@
     </div>
 </template>
 <script>
+import { Message } from 'element-ui';
 import { mapState } from 'vuex';
 
 export default {
     name: 'nav-header',
     data() {
         return {
-            
+
             phoneList: []
         }
     },
-    computed:{
-    //    username(){
-    //     return this.$store.state.username;
-    //    },
-    //    cartcount(){
-    //     return this.$store.state.cartcount;
-    //    }
-    ...mapState(['username','cartcount'])
+    computed: {
+        //    username(){
+        //     return this.$store.state.username;
+        //    },
+        //    cartcount(){
+        //     return this.$store.state.cartcount;
+        //    }
+        ...mapState(['username', 'cartcount'])
     },
     filters: {
         currency(val) {
@@ -204,11 +208,31 @@ export default {
     },
     mounted() {
         this.getProductList();
+        let params = this.$route.params;
+        if (params && params.from == 'login') {
+            this.getCartCount();
+
+        }
     },
     methods: {
 
         login() {
             this.$router.push('/login');
+        },
+
+        getCartCount() {
+            this.axios.get('/carts/products/sum').then((res) => {
+                this.$store.dispatch("getCartCount", res);
+            });
+
+        },
+        logout() {
+            this.axios.post("/user/logout").then(() => {
+                Message.success("退出成功");
+                this.$cookie.set("userId", "", { expires: '-1' });
+                this.$store.dispatch("saveUserName", "");
+                this.$store.dispatch("getCartCount", 0);
+            });
         },
         getProductList() {
             this.axios.get("/products", {
@@ -234,6 +258,7 @@ export default {
 @import './../assets/scss/base.scss';
 @import './../assets/scss/mixin.scss';
 @import './../assets/scss/config.scss';
+
 .header {
     .nav-topbar {
         height: 39px;
@@ -250,7 +275,7 @@ export default {
                 margin-right: 17px;
             }
 
-          
+
 
             .my-cart {
                 width: 110px;
@@ -286,7 +311,7 @@ export default {
             @include flex();
 
 
-            
+
 
             .header-menu {
                 display: inline-block;

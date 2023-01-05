@@ -87,6 +87,9 @@ export default{
     ProductParam,
     ServiceBar
   },
+  computed:{
+    
+  },
   mounted(){
     this.getProductInfo();
   },

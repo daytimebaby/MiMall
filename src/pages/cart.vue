@@ -61,6 +61,9 @@
 import OrderHeader from './../components/OrderHeader'
 import ServiceBar from './../components/ServiceBar'
 import NavFooter from './../components/NavFooter'
+import { Message } from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css';
+
 export default {
   name: 'index',
   components: {
@@ -90,7 +93,8 @@ export default {
       let selected = item.productSelected;
       if (type == '-') {
         if (quantity == 1) {
-          alert('商品至少保留一件');
+          // alert('商品至少保留一件');
+         Message.warning("商品至少保留一件");
           return;
         }
         --quantity;
@@ -114,6 +118,7 @@ export default {
     },
     delProduct(item) {
       this.axios.delete(`/carts/${item.productId}`).then((res) => {
+        Message.success("删除成功");
         this.renderData(res);
       })
     },

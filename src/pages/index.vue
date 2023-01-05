@@ -296,7 +296,6 @@ export default {
                     a {
                         position: relative;
                         display: inline-block;
-
                         font-size: 16px;
                         color: #fff;
                         padding-left: 30px;
@@ -334,9 +333,6 @@ export default {
                                 width: 40%;
                                 padding-left: 23px;
                                 z-index: 9;
-
-
-
                             }
 
                             a {

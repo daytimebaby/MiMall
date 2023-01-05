@@ -15,9 +15,11 @@ export default {
     }
   },
   mounted() {
+    if (this.$cookie.get('userId')) {
+      this.getUser();
+      this.getCartCount();
+    }
 
-    this.getUser();
-    this.getCartCount();
   },
   methods: {
     getUser() {
@@ -29,8 +31,8 @@ export default {
 
     },
     getCartCount() {
-      this.axios.get('/carts/products/sum').then((res) => { 
-         this.$store.dispatch("getCartCount", res);
+      this.axios.get('/carts/products/sum').then((res) => {
+        this.$store.dispatch("getCartCount", res);
       });
 
     }

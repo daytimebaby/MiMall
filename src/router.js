@@ -2,15 +2,10 @@ import Vue from 'vue'
 import router from 'vue-router'
 import Home from './pages/home'
 import Index from './pages/index'
-import Product from './pages/product'
-import Detail from './pages/detail'
+
 import Cart from './pages/cart'
 import Order from './pages/order'
-import OrderConfirm from './pages/orderConfirm'
-import OrderList from './pages/orderList'
-import OrderPay from './pages/orderPay'
-import AliPay from './pages/alipay'
-import Login from './pages/login'
+
 
 Vue.use(router);
 
@@ -31,12 +26,12 @@ export default new router({
                 {
                     path:"/product/:id",
                     name:"product",
-                    component:Product
+                    component:()=> import('./pages/product.vue')
                 },
                 {
                     path:"/detail/:id",
                     name:"detail",
-                    component:Detail
+                    component:()=> import('./pages/detail.vue')
                 }
             ]
 
@@ -54,29 +49,29 @@ export default new router({
                 {
                     path:"confirm",
                     name:"order-confirm",
-                    component:OrderConfirm,
+                    component:()=> import('./pages/orderConfirm.vue'),
                 },
                 {
                     path:"list",
                     name:"order-list",
-                    component:OrderList,
+                    component:()=> import('./pages/orderList.vue'),
                 },
                 {
                     path:"pay",
                     name:"order-pay",
-                    component:OrderPay,
+                    component:()=> import('./pages/orderPay.vue'),
                 },
                 {
                     path:"alipay",
                     name:"ali-pay",
-                    component:AliPay,
+                    component:()=> import('./pages/alipay.vue'),
                 },
             ]
         },
         {
             path:"/login",
             name:"login",
-            component:Login,
+            component:()=> import('./pages/login.vue'),
         },
     ]
 });
